@@ -1,22 +1,8 @@
 # ⚡ ClashPerks API
 
-```js
-const request = require('request-promise');
+## License
 
-const option = {
-	uri: 'http://127.0.0.1/api?tag=%23PGQ0YVQG&guild=509784317598105619',
-	headers: {
-		api_key: process.env.API_KEY
-	},
-	json: true
-};
-
-request(option).then(data => console.log(data)).catch(error => console.error(error));
-```
-
-# License
-
-> Copyright (c) 2018 - 2019 Suvajit
+> Copyright (c) 2019 SUVAJIT
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy
 > of this software and associated documentation files (the "Software"), to deal

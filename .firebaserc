@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "clashperk"
+  },
+  "targets": {
+    "clashperk": {
+      "hosting": {
+        "functions": [
+          "api-clashperk"
+        ]
+      }
+    }
+  }
+}
