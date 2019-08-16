@@ -31,22 +31,22 @@ function getGuild() {
 }
 
 app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	next();
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
 });
 
 app.get('/users', (req, res) => {
     getUser().then(data => {
         if (!data[req.query.id]) return res.status(404).json({ status: 404, message: 'resource was not found' });
-        res.json({ id: req.query.id,  uses: data[req.query.id] });
+        res.json({ id: req.query.id, uses: data[req.query.id] });
     });
 });
 
 app.get('/guilds', (req, res) => {
     getGuild().then(data => {
         if (!data[req.query.id]) return res.status(404).json({ status: 404, message: 'resource was not found' });
-        res.json({ id: req.query.id,  uses: data[req.query.id] });
+        res.json({ id: req.query.id, uses: data[req.query.id] });
     });
 });
 
@@ -80,16 +80,16 @@ app.post('/patreonwebhook', async (req, res) => {
     if (req.query.token === token) {
         switch (req.headers['x-patreon-event']) {
             case 'members:pledge:create':
-              database.ref('patreon').child(Date.now()).update(req.body);
-            break;
-      
+                database.ref('patreon').child(Date.now()).update(req.body);
+                break;
+
             case 'members:pledge:delete':
-              database.ref('patreon').child(Date.now()).update(req.body);
-            break;
-      
+                database.ref('patreon').child(Date.now()).update(req.body);
+                break;
+
             case 'members:pledge:update':
-              database.ref('patreon').child(Date.now()).update(req.body);
-            break;
+                database.ref('patreon').child(Date.now()).update(req.body);
+                break;
         }
         return res.json({ method: 'POST', status: 200 });
     }
