@@ -4,6 +4,12 @@ const app = express();
 const firebase = require('firebase-admin');
 const { token } = require('./config.json');
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
+
 const firebaseApp = firebase.initializeApp(
     functions.config().firebase
 );
@@ -30,10 +36,13 @@ function getGuild() {
     return ref.once('value').then(snap => snap.val());
 }
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
+app.get('/stats', (req, res) => {
+    getStats().then(data => {
+        if (req.query.token === token || req.headers.token === token) {
+            return res.json(data);
+        }
+        return res.status(403).json({ status: 403, message: 'api key is invalid' });
+    });
 });
 
 app.get('/users', (req, res) => {
