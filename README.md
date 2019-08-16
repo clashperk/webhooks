@@ -1,4 +1,4 @@
-# ⚡ ClashPerks API
+# ⚡ ClashPerk API <img src="https://i.imgur.com/3Wn8fek.png" width="25%" align="right"></a>
 
 ## License
 
