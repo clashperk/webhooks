@@ -2,6 +2,7 @@
   "hosting": [
     {
       "target": "functions",
+      "public": "public",
       "rewrites": [
         {
           "source": "**",
