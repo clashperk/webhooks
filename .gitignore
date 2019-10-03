@@ -65,4 +65,4 @@ node_modules/
 .env
 
 # Auth
-auth.json
+config.json
