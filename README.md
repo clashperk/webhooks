@@ -1,4 +1,4 @@
-# ⚡ ClashPerk API <img src="https://i.imgur.com/3Wn8fek.png" width="25%" align="right"></a>
+# ClashPerk API <img src="https://i.imgur.com/3Wn8fek.png" width="25%" align="right"></a>
 
 #### This is the express server and firebase function that we use to handle incoming webhooks from various services and API endpoints.
 
