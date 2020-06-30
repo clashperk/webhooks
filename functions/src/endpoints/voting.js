@@ -52,7 +52,7 @@ module.exports = (app, database) => {
 				if (!user) return;
 				const payload_json = JSON.stringify({
 					username: 'ClashPerk',
-					avatar_url: 'https://i.imgur.com/bpYiIsV.png ',
+					avatar_url: 'https://i.imgur.com/bpYiIsV.png',
 					embeds: [
 						{
 							author: {
