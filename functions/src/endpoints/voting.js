@@ -1,3 +1,5 @@
+const https = require('https');
+
 function getRandom(max, min) {
 	return Math.round(Math.random() * (max - min)) + Math.round(min);
 }
@@ -26,6 +28,55 @@ module.exports = (app, database) => {
 			}
 			const earnedXP = { earnedXP: Math.round(xp) };
 			await database.ref('votes').child(last_voted).update(Object.assign(req.body, earnedXP));
+			try {
+				const user = await new Promise(resolve => {
+					https.request(`https://discord.com/api/v6/users/${req.body.user}`, {
+						method: 'GET', headers: {
+							Authorization: `Bot ${process.env.BOT_TOKEN}`,
+							'Content-Type': 'application/json'
+						}
+					}, res => {
+						let raw = '';
+						res.on('data', chunk => {
+							raw += chunk;
+						});
+						res.on('end', () => {
+							console.log(raw);
+							if (res.statusCode === 200) {
+								resolve(JSON.parse(raw));
+							} else resolve(null);
+						});
+					}).end();
+				});
+
+				if (!user) return;
+				const payload_json = JSON.stringify({
+					username: 'ClashPerk',
+					avatar_url: 'https://i.imgur.com/bpYiIsV.png ',
+					embeds: [
+						{
+							author: {
+								name: `${user.username}#${user.discriminator}`,
+								icon_url: `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp`
+							},
+							footer: {
+								text: `Received ${earnedXP.earnedXP} XP`
+							},
+							color: 0x38d863,
+							timestamp: new Date()
+						}
+					]
+				})
+				https.request(`https://discordapp.com/api/webhooks/611560024895913985/${process.env.WEBHOOK_TOKEN}`, {
+					method: 'POST', headers: {
+						'Content-Type': 'application/json'
+					}
+				}, res => {
+					res.on('end', () => {
+						console.log(res.statusCode);
+					});
+				}).end(payload_json);
+			} catch { }
 			return res.json({ method: 'POST', status: 200 });
 		}
 
