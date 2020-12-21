@@ -32,7 +32,7 @@ module.exports = (app, database) => {
 				const user = await new Promise(resolve => {
 					https.request(`https://discord.com/api/v6/users/${req.body.user}`, {
 						method: 'GET', headers: {
-							Authorization: `Bot ${process.env.BOT_TOKEN}`,
+							'Authorization': `Bot ${process.env.BOT_TOKEN}`,
 							'Content-Type': 'application/json'
 						}
 					}, res => {
@@ -44,7 +44,7 @@ module.exports = (app, database) => {
 							console.log(raw);
 							if (res.statusCode === 200) {
 								resolve(JSON.parse(raw));
-							} else resolve(null);
+							} else { resolve(null); }
 						});
 					}).end();
 				});
@@ -66,7 +66,7 @@ module.exports = (app, database) => {
 							timestamp: new Date()
 						}
 					]
-				})
+				});
 				https.request(`https://discordapp.com/api/webhooks/611560024895913985/${process.env.WEBHOOK_TOKEN}`, {
 					method: 'POST', headers: {
 						'Content-Type': 'application/json'
