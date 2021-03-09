@@ -129,7 +129,7 @@ async function pledgeDelete(body) {
 			`$ ${attributes.lifetime_support_cents / 100}`
 		].join('\n'),
 		footer: {
-			text: 'Pledge Update'
+			text: 'Pledge Delete'
 		},
 		color: 0xf30c11
 	};

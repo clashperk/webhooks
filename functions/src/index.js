@@ -5,6 +5,7 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const { Firebase } = require('firestore-db');
+const bodyParser = require('body-parser');
 
 const firebaseApp = new Firebase({
 	projectId: process.env.PROJECT_ID,
@@ -27,9 +28,16 @@ app.use((req, res, next) => {
 	next();
 });
 
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+// app.set('view engine', 'ejs');
+
 exports.app = functions.https.onRequest(app);
 
-/* app.listen(process.env.PORT, () => {
+/*
+app.listen(process.env.PORT, () => {
 	console.log(`Server started on port ${process.env.PORT}`);
-});*/
+});
+*/
 

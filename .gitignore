@@ -67,3 +67,5 @@ node_modules/
 # Auth
 config.json
 index_.js
+views/
+timezone.js
