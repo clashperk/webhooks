@@ -1,0 +1,32 @@
+name: Cloud Function
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Reposotory
+        uses: actions/checkout@v2
+      
+      - name: Use Node.js 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install Firebase Tools
+        run: npm i -g firebase-tools
+
+      - name: NPM Install
+        run: |
+          cd functions
+          npm i
+
+      - name: Deploy Cloud Function
+        run: |
+          cd functions
+          firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}"
