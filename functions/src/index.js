@@ -1,43 +1,18 @@
-require('dotenv').config();
 const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
-const fs = require('fs');
-const path = require('path');
-const { Firebase } = require('firestore-db');
-const bodyParser = require('body-parser');
 
-const firebaseApp = new Firebase({
-	projectId: process.env.PROJECT_ID,
-	clientEmail: process.env.CLIENT_EMAIL,
-	privateKey: process.env.PRIVATE_KEY
-});
-
-const database = firebaseApp.firebase.database();
-
-const endpoints = fs.readdirSync(path.join(__dirname, 'endpoints'))
-	.filter(file => file.endsWith('.js'))
-	.map(file => require(path.join(__dirname, 'endpoints', file)));
-for (const endpoint of endpoints) {
-	endpoint(app, database);
-}
-
-app.use((req, res, next) => {
+app.use((_req, res, next) => {
 	res.header('Access-Control-Allow-Origin', '*');
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 	next();
 });
 
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-// app.set('view engine', 'ejs');
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use('/webhook', require('./routes/patreon'));
+app.use('/webhook', require('./routes/voting'));
 
 exports.app = functions.https.onRequest(app);
-
-/*
-app.listen(process.env.PORT, () => {
-	console.log(`Server started on port ${process.env.PORT}`);
-});
-*/
-
