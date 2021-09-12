@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const router = require('express').Router();
 const https = require('https');
 
-const DISCORD_WEBHOOK_URL = functions.config().webhook.url;
+const DISCORD_WEBHOOK_URL = functions.config().webhook.patreon;
 const SECRET = functions.config().webhook.secret;
 const BOT_TOKEN = functions.config().bot.token;
 
@@ -65,7 +65,7 @@ async function executeWebhook(embed) {
 
 async function pledgeCreate(body) {
 	const patron = body.included?.find(inc => inc.type === 'user');
-	const discordId = patron?.attributes?.social_connections?.discord.user_id;
+	const discordId = patron?.attributes?.social_connections?.discord?.user_id;
 
 	const { attributes } = body.data;
 	if (attributes.currently_entitled_amount_cents === 0) return;
@@ -97,7 +97,7 @@ async function pledgeCreate(body) {
 
 async function pledgeUpdate(body) {
 	const patron = body.included?.find(inc => inc.type === 'user');
-	const discordId = patron?.attributes?.social_connections?.discord.user_id;
+	const discordId = patron?.attributes?.social_connections?.discord?.user_id;
 
 	const { attributes } = body.data;
 
@@ -128,7 +128,7 @@ async function pledgeUpdate(body) {
 
 async function pledgeDelete(body) {
 	const patron = body.included?.find(inc => inc.type === 'user');
-	const discordId = patron?.attributes?.social_connections?.discord.user_id;
+	const discordId = patron?.attributes?.social_connections?.discord?.user_id;
 
 	const { attributes } = body.data;
 

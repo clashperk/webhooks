@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const router = require('express').Router();
 const https = require('https');
 
-const DISCORD_WEBHOOK_URL = functions.config().webhook.url;
+const DISCORD_WEBHOOK_URL = functions.config().webhook.top_gg;
 const SECRET = functions.config().webhook.secret;
 const BOT_TOKEN = functions.config().bot.token;
 
