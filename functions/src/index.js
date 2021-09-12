@@ -12,6 +12,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.get('/', (_req, res) => res.json(process.memoryUsage()));
 app.use('/webhook', require('./routes/patreon'));
 app.use('/webhook', require('./routes/voting'));
 
